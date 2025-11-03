@@ -1,6 +1,8 @@
 from stats import get_num_words
 from stats import get_num_chars
 from stats import get_sorted_list_num_chars
+import sys
+
 
 def get_book_text(book_path):
 
@@ -10,21 +12,26 @@ def get_book_text(book_path):
     return book_contents
 
 def main():
-    book_path = "books/frankenstein.txt"
-    book_contents = get_book_text(book_path)
-    num_words = get_num_words(book_contents)
-    num_chars = get_num_chars(book_contents)
-    sorted_list_num_chars = get_sorted_list_num_chars(num_chars)
+    try:
+        book_path = sys.argv[1]
+        book_contents = get_book_text(book_path)
+        num_words = get_num_words(book_contents)
+        num_chars = get_num_chars(book_contents)
+        sorted_list_num_chars = get_sorted_list_num_chars(num_chars)
 
-    print("============ BOOKBOT ============")
-    print(f"Analyzing book found at {book_path}...")
-    print("----------- Word Count ----------")
-    print(f"Found {num_words} total words")
-    print("--------- Character Count -------")
-    for item in sorted_list_num_chars:
-        if item["char"].isalpha() == True:
-            print(f"{item["char"]}: {item["num"]}")
-    print("============= END ===============")
-    return
+        print("============ BOOKBOT ============")
+        print(f"Analyzing book found at {book_path}...")
+        print("----------- Word Count ----------")
+        print(f"Found {num_words} total words")
+        print("--------- Character Count -------")
+        for item in sorted_list_num_chars:
+            if item["char"].isalpha() == True:
+                print(f"{item["char"]}: {item["num"]}")
+        print("============= END ===============")
+        return
+    except Exception as e:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
 
+    
 main()
